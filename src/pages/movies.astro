@@ -1,0 +1,85 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { SITE_TITLE, MOVIES } from '../consts';
+
+// Group by genre
+const genres = [...new Set(MOVIES.map(m => m.genre))];
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+	<BaseHead title={`Movies - ${SITE_TITLE}`} description="My personal movie collection — films that shaped how I think" />
+</head>
+<body>
+	<Header />
+	<main class="page">
+		<div class="page-header">
+			<h1>Movies</h1>
+			<p>Films that shaped how I think, tell stories, and build products. Not ranked — just loved.</p>
+		</div>
+
+		<div class="movie-grid">
+			{MOVIES.map((m) => (
+				<div class="movie-card">
+					<div class="movie-meta-top">
+						<span class="movie-genre">{m.genre}</span>
+						<span class="movie-year">{m.year}</span>
+					</div>
+					<h3>{m.title}</h3>
+					<p class="movie-director">{m.director}</p>
+					<p class="movie-note">{m.note}</p>
+					<span class="movie-rating">{m.rating}</span>
+				</div>
+			))}
+		</div>
+	</main>
+	<Footer />
+</body>
+</html>
+
+<style>
+	.page {
+		max-width: var(--wide-width); margin: 0 auto;
+		padding: 2rem var(--page-padding) 3rem;
+	}
+	.page-header { margin-bottom: 2.5rem; }
+	.page-header h1 { font-size: 2rem; margin: 0 0 0.35rem; }
+	.page-header p { color: var(--text-secondary); font-size: 1rem; margin: 0; max-width: 480px; }
+
+	.movie-grid {
+		display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem;
+	}
+	.movie-card {
+		padding: 1.25rem; border: 1px solid var(--border-light);
+		border-radius: 10px; background: var(--bg-card);
+		transition: background 150ms ease-out, border-color 150ms ease-out, box-shadow 150ms ease-out;
+	}
+	.movie-card:hover {
+		background: var(--accent-light);
+		border-color: var(--accent);
+		box-shadow: 0 0 0 1px var(--accent);
+	}
+	.movie-card:hover h3 {
+		color: var(--accent);
+	}
+	.movie-meta-top {
+		display: flex; justify-content: space-between; align-items: center;
+		margin-bottom: 0.5rem;
+	}
+	.movie-genre {
+		font-size: 0.65rem; font-weight: 500; text-transform: uppercase;
+		letter-spacing: 0.06em; color: var(--accent);
+		background: var(--accent-light); padding: 0.15em 0.5em; border-radius: 4px;
+	}
+	.movie-year { font-size: 0.75rem; color: var(--text-tertiary); }
+	.movie-card h3 { font-size: 1rem; margin: 0 0 0.2rem; color: var(--text-primary); transition: color 150ms ease-out; }
+	.movie-director { font-size: 0.8rem; color: var(--text-tertiary); margin: 0 0 0.75rem; }
+	.movie-note {
+		font-size: 0.85rem; color: var(--text-secondary); margin: 0 0 0.75rem;
+		line-height: 1.5; font-style: italic;
+	}
+	.movie-rating { font-size: 0.9rem; letter-spacing: 0.05em; }
+</style>

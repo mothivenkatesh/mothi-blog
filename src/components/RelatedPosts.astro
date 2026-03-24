@@ -1,0 +1,169 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import FormattedDate from './FormattedDate.astro';
+
+interface Props {
+	currentPost: CollectionEntry<'blog'>;
+	allPosts: CollectionEntry<'blog'>[];
+}
+
+const { currentPost, allPosts } = Astro.props;
+
+// Score posts by shared categories
+const candidates = allPosts
+	.filter(p => p.id !== currentPost.id && !p.data.draft)
+	.map(p => {
+		const shared = p.data.categories.filter((c: string) =>
+			currentPost.data.categories.includes(c)
+		).length;
+		const samePrimary = p.data.categories[0] === currentPost.data.categories[0] ? 1 : 0;
+		return { post: p, score: shared * 2 + samePrimary };
+	})
+	.filter(p => p.score > 0)
+	.sort((a, b) => b.score - a.score || b.post.data.pubDate.valueOf() - a.post.data.pubDate.valueOf())
+	.slice(0, 3)
+	.map(p => p.post);
+
+// Compute read times
+function getReadTime(post: CollectionEntry<'blog'>) {
+	const words = (post.body || '').split(/\s+/).filter(Boolean).length;
+	return Math.max(1, Math.ceil(words / 238));
+}
+
+// Find next chronological post
+const sortedByDate = allPosts
+	.filter(p => !p.data.draft)
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const currentIdx = sortedByDate.findIndex(p => p.id === currentPost.id);
+const nextPost = currentIdx > 0 ? sortedByDate[currentIdx - 1] : null;
+---
+
+{candidates.length > 0 && (
+	<section class="related-posts" aria-labelledby="related-heading">
+		<h2 id="related-heading">You might also like</h2>
+		<div class="related-grid">
+			{candidates.map(post => (
+				<a href={`/blog/${post.id}/`} class="related-card">
+					<h3>{post.data.title}</h3>
+					<p>{post.data.description}</p>
+					<span class="related-meta">
+						<FormattedDate date={post.data.pubDate} />
+						<span class="dot">&middot;</span>
+						{getReadTime(post)} min read
+					</span>
+				</a>
+			))}
+		</div>
+	</section>
+)}
+
+{nextPost && (
+	<div class="continue-reading">
+		<span class="continue-label">Continue reading</span>
+		<a href={`/blog/${nextPost.id}/`}>
+			{nextPost.data.title} &rarr;
+		</a>
+	</div>
+)}
+
+<style>
+	.related-posts {
+		margin-top: 3.5em;
+		padding-top: 2.5em;
+		border-top: 1px solid var(--border-light);
+	}
+	.related-posts h2 {
+		font-size: 0.75rem;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		color: var(--text-tertiary);
+		margin: 0 0 1.25em 0;
+		font-family: 'Inter', -apple-system, sans-serif;
+	}
+	.related-grid {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 1rem;
+	}
+	.related-card {
+		display: flex;
+		flex-direction: column;
+		padding: 1.25rem;
+		border: 1px solid var(--border-light);
+		border-radius: 10px;
+		text-decoration: none !important;
+		background: var(--bg-card);
+		color: inherit;
+		transition: background 150ms ease-out, border-color 150ms ease-out, box-shadow 150ms ease-out;
+	}
+	.related-card:hover {
+		background: var(--accent-light);
+		border-color: var(--accent);
+		text-decoration: none !important;
+	}
+	.related-card:hover h3 {
+		color: var(--accent);
+	}
+	.related-card h3 {
+		font-size: 0.9rem;
+		font-weight: 600;
+		margin: 0 0 0.4rem !important;
+		padding: 0;
+		color: var(--text-primary);
+		line-height: 1.4;
+		font-family: 'Inter', -apple-system, sans-serif;
+		transition: color 150ms ease-out;
+	}
+	.related-card p {
+		font-size: 0.8rem;
+		color: var(--text-secondary);
+		margin: 0 0 0.75rem;
+		line-height: 1.5;
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+		font-family: 'Inter', -apple-system, sans-serif;
+	}
+	.related-meta {
+		font-size: 0.75rem;
+		color: var(--text-tertiary);
+		margin-top: auto;
+		font-family: 'Inter', -apple-system, sans-serif;
+	}
+	@media (max-width: 640px) {
+		.related-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+	.dot {
+		margin: 0 0.25em;
+	}
+
+	.continue-reading {
+		margin-top: 3em;
+		padding: 1.5em;
+		background: var(--bg-secondary);
+		border-radius: 8px;
+		text-align: center;
+	}
+	.continue-label {
+		display: block;
+		font-size: 0.75rem;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		color: var(--text-tertiary);
+		margin-bottom: 0.5em;
+	}
+	.continue-reading a {
+		font-size: 1.1rem;
+		font-weight: 600;
+		text-decoration: none;
+		color: var(--accent);
+	}
+	.continue-reading a:hover {
+		text-decoration: underline;
+	}
+</style>

@@ -1,0 +1,57 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { SITE_TITLE, SOCIALS } from '../consts';
+---
+
+<!doctype html>
+<html lang="en">
+<head><BaseHead title={`About - ${SITE_TITLE}`} description="About Mothi — PMM at Cashfree Payments" /></head>
+<body>
+	<Header />
+	<main class="page">
+		<div class="about-hero">
+			<img src="/images/blog/mothi.png" alt="Mothi" class="about-img" width="120" height="120" loading="eager" decoding="async" />
+			<div>
+				<h1>About me</h1>
+				<p class="about-role">Product Marketing Manager at Cashfree Payments</p>
+			</div>
+		</div>
+		<div class="prose">
+			<p>
+				I'm a Product Marketing Manager at Cashfree Payments, one of India's leading payment infrastructure companies.
+				I work on Secure ID (identity verification), developer community growth, and go-to-market strategy for B2B fintech products.
+			</p>
+			<p>
+				Before Cashfree, I spent years in SEO, content marketing, and growth — always at the intersection of product and storytelling.
+				I write here about the things I learn, the frameworks I use, and the career decisions that shaped my path.
+			</p>
+			<h2>What I write about</h2>
+			<ul>
+				<li><strong>Product Marketing</strong> — Positioning, GTM, sales enablement, competitive intel</li>
+				<li><strong>Indian Fintech</strong> — Banking tech, credit risk, identity, DPDP compliance</li>
+				<li><strong>Career</strong> — First 90 days, hiring PMMs, building trust, handling ambiguity</li>
+				<li><strong>Growth</strong> — Community building, content strategy, developer marketing</li>
+			</ul>
+			<h2>Elsewhere</h2>
+			<p>
+				Find me on <a href={SOCIALS.github} target="_blank" rel="noopener">GitHub</a>,
+				<a href={SOCIALS.linkedin} target="_blank" rel="noopener">LinkedIn</a>,
+				and <a href={SOCIALS.twitter} target="_blank" rel="noopener">Twitter</a>.
+				Or <a href={SOCIALS.email}>send me an email</a>.
+			</p>
+		</div>
+	</main>
+	<Footer />
+</body>
+</html>
+
+<style>
+	.page { max-width: var(--content-width); margin: 0 auto; padding: 2.5rem var(--page-padding) 3rem; }
+	.about-hero { display:flex; align-items:center; gap:1.5rem; margin-bottom:2rem; }
+	.about-img { border-radius:50%; object-fit:cover; }
+	.about-hero h1 { font-size:2rem; margin:0 0 0.2rem; }
+	.about-role { font-size:0.95rem; color:var(--text-secondary); margin:0; }
+	@media (max-width:640px) { .about-hero { flex-direction:column; text-align:center; } }
+</style>

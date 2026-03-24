@@ -1,0 +1,158 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+	currentPost: CollectionEntry<'blog'>;
+	allPosts: CollectionEntry<'blog'>[];
+}
+
+const { currentPost, allPosts } = Astro.props;
+
+// Detect [Part N] pattern
+const partMatch = currentPost.data.title.match(/\[Part\s*(\d+)\]/i);
+let series = null;
+
+if (partMatch) {
+	const currentPart = parseInt(partMatch[1]);
+	const baseTitle = currentPost.data.title.replace(/\s*\[Part\s*\d+\].*$/i, '').trim();
+	const currentDate = currentPost.data.pubDate.toISOString().split('T')[0];
+	const currentCats = currentPost.data.categories;
+
+	// Strategy: find other [Part N] posts that share a category AND were published on the same day
+	const siblings = allPosts
+		.filter(p => p.id !== currentPost.id)
+		.filter(p => /\[Part\s*\d+\]/i.test(p.data.title))
+		.filter(p => {
+			const pDate = p.data.pubDate.toISOString().split('T')[0];
+			const sharedCat = p.data.categories.some((c: string) => currentCats.includes(c));
+			return sharedCat && pDate === currentDate;
+		})
+		.map(p => ({
+			post: p,
+			partNumber: parseInt(p.data.title.match(/\[Part\s*(\d+)\]/i)?.[1] || '0')
+		}));
+
+	const allParts = [
+		{ post: currentPost, partNumber: currentPart },
+		...siblings
+	].sort((a, b) => a.partNumber - b.partNumber);
+
+	if (allParts.length > 1) {
+		const currentIdx = allParts.findIndex(p => p.partNumber === currentPart);
+		series = {
+			title: baseTitle,
+			parts: allParts,
+			currentPart,
+			totalParts: allParts.length,
+			prev: currentIdx > 0 ? allParts[currentIdx - 1] : null,
+			next: currentIdx < allParts.length - 1 ? allParts[currentIdx + 1] : null,
+		};
+	}
+}
+---
+
+{series && (
+	<nav class="series-nav" aria-label="Series navigation">
+		<div class="series-header">
+			<span class="series-label">Series</span>
+			<strong class="series-title">{series.title}</strong>
+		</div>
+		<ol class="series-parts">
+			{series.parts.map(part => (
+				<li class:list={[{ active: part.partNumber === series!.currentPart }]}>
+					{part.partNumber === series!.currentPart
+						? <span>Part {part.partNumber}</span>
+						: <a href={`/blog/${part.post.id}/`}>Part {part.partNumber}</a>
+					}
+				</li>
+			))}
+		</ol>
+		<div class="series-arrows">
+			{series.prev && (
+				<a href={`/blog/${series.prev.post.id}/`} class="series-prev">
+					&larr; Part {series.prev.partNumber}
+				</a>
+			)}
+			{series.next && (
+				<a href={`/blog/${series.next.post.id}/`} class="series-next">
+					Part {series.next.partNumber} &rarr;
+				</a>
+			)}
+		</div>
+	</nav>
+)}
+
+<style>
+	.series-nav {
+		background: var(--bg-secondary);
+		border: 1px solid var(--border-light);
+		border-radius: 8px;
+		padding: 1.25em 1.5em;
+		margin: 2em 0;
+	}
+	.series-header {
+		display: flex;
+		align-items: center;
+		gap: 0.75em;
+		margin-bottom: 0.75em;
+	}
+	.series-label {
+		font-size: 0.7rem;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		color: var(--accent);
+		background: var(--accent-light);
+		padding: 0.15em 0.5em;
+		border-radius: 4px;
+	}
+	.series-title {
+		font-size: 0.95rem;
+		color: var(--text-primary);
+	}
+	.series-parts {
+		list-style: none;
+		display: flex;
+		gap: 0;
+		padding: 0;
+		margin: 0 0 0.75em 0;
+	}
+	.series-parts li {
+		margin: 0;
+	}
+	.series-parts li a,
+	.series-parts li span {
+		display: block;
+		padding: 0.4em 0.8em;
+		font-size: 0.8rem;
+		font-weight: 500;
+		border-radius: 6px;
+		text-decoration: none;
+		color: var(--text-secondary);
+		transition: background 0.15s;
+	}
+	.series-parts li a:hover {
+		background: var(--bg-card);
+		color: var(--text-primary);
+	}
+	.series-parts li.active span {
+		background: var(--accent);
+		color: white;
+	}
+	.series-arrows {
+		display: flex;
+		justify-content: space-between;
+	}
+	.series-arrows a {
+		font-size: 0.85rem;
+		font-weight: 500;
+		text-decoration: none;
+		color: var(--accent);
+	}
+	.series-arrows a:hover {
+		text-decoration: underline;
+	}
+	.series-next {
+		margin-left: auto;
+	}
+</style>

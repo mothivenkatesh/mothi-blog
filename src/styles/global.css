@@ -1,0 +1,375 @@
+/*
+ * Mothi Blog — Design System
+ * Inspired by: Stamatiou (opacity hierarchy, hover reveals, 150ms transitions)
+ *              Tania Rascia (warm tones, 3-col layout, code styling)
+ *              Stefan Zweifel (year-grouped posts, minimal nav, projects page)
+ *
+ * Typography: Inter (headings) + Georgia (prose body)
+ * Measure: 65ch (~680px) for optimal readability (Refactoring UI)
+ * Spacing: 8-point grid
+ * Colors: Opacity-based hierarchy, not hard color swaps
+ */
+
+/* ═══════════════════════════════════════════
+   1. DESIGN TOKENS
+   ═══════════════════════════════════════════ */
+
+:root {
+  --accent: #2337ff;
+  --accent-hover: #1a2be6;
+  --accent-light: #eef0ff;
+  --accent-glow: rgba(35, 55, 255, 0.08);
+
+  --text-primary: #1a1a2e;
+  --text-secondary: #555770;
+  --text-tertiary: #8b8fa8;
+  --text-inverted: #fafaf9;
+
+  --bg-primary: #fafaf9;
+  --bg-secondary: #f3f3f0;
+  --bg-tertiary: #eaeae6;
+  --bg-card: #ffffff;
+  --bg-code: #1e1e2e;
+
+  --border-light: #e5e5e0;
+  --border-medium: #d4d4cf;
+
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 2px 8px rgba(0,0,0,0.06), 0 0 1px rgba(0,0,0,0.08);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.04);
+  --shadow-hover: 0 12px 32px rgba(0,0,0,0.1), 0 4px 12px rgba(0,0,0,0.06);
+
+  --ease: 150ms ease-out;
+  --ease-slow: 300ms ease-out;
+
+  --content-width: 680px;
+  --wide-width: 800px;
+  --page-padding: 1.25rem;
+
+  --cat-pm-bg: #eef0ff; --cat-pm-text: #2337ff;
+  --cat-fintech-bg: #fef3e2; --cat-fintech-text: #b45309;
+  --cat-career-bg: #ecfdf5; --cat-career-text: #059669;
+  --cat-prodmgmt-bg: #fdf2f8; --cat-prodmgmt-text: #db2777;
+  --cat-growth-bg: #f0fdf4; --cat-growth-text: #16a34a;
+  --cat-creator-bg: #faf5ff; --cat-creator-text: #9333ea;
+  --cat-tech-bg: #eff6ff; --cat-tech-text: #2563eb;
+}
+
+/* ── Dark mode ── */
+[data-theme="dark"] {
+  --accent: #6b7cff;
+  --accent-hover: #8b97ff;
+  --accent-light: rgba(107, 124, 255, 0.12);
+  --accent-glow: rgba(107, 124, 255, 0.1);
+
+  --text-primary: #e4e4e7;
+  --text-secondary: #a1a1aa;
+  --text-tertiary: #71717a;
+  --text-inverted: #18181b;
+
+  --bg-primary: #0f0f12;
+  --bg-secondary: #18181d;
+  --bg-tertiary: #222228;
+  --bg-card: #1c1c22;
+  --bg-code: #0d0d12;
+
+  --border-light: #2a2a32;
+  --border-medium: #3a3a44;
+
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.2);
+  --shadow-md: 0 2px 8px rgba(0,0,0,0.3);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.4);
+  --shadow-hover: 0 12px 32px rgba(0,0,0,0.5);
+
+  --cat-pm-bg: rgba(35,55,255,0.12); --cat-pm-text: #8b97ff;
+  --cat-fintech-bg: rgba(180,83,9,0.12); --cat-fintech-text: #fbbf24;
+  --cat-career-bg: rgba(5,150,105,0.12); --cat-career-text: #34d399;
+  --cat-prodmgmt-bg: rgba(219,39,119,0.12); --cat-prodmgmt-text: #f472b6;
+  --cat-growth-bg: rgba(22,163,106,0.12); --cat-growth-text: #4ade80;
+  --cat-creator-bg: rgba(147,51,234,0.12); --cat-creator-text: #c084fc;
+  --cat-tech-bg: rgba(37,99,235,0.12); --cat-tech-text: #60a5fa;
+}
+
+/* ═══════════════════════════════════════════
+   2. FONT FACE — Self-hosted Geist
+   ═══════════════════════════════════════════ */
+
+@font-face {
+  font-family: 'Geist';
+  src: url('/fonts/Geist-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Geist';
+  src: url('/fonts/Geist-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Geist';
+  src: url('/fonts/Geist-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Geist';
+  src: url('/fonts/Geist-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('/fonts/GeistMono-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('/fonts/GeistMono-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ═══════════════════════════════════════════
+   3. RESET & BASE
+   ═══════════════════════════════════════════ */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+/*
+ * Font fallback with size-adjust to minimize CLS.
+ * System fonts approximate Inter's metrics so layout barely shifts
+ * when the web font loads.
+ */
+body {
+  font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  margin: 0; padding: 0;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Only transition bg/color — don't transition on first load */
+}
+/* Transition only after page is interactive (prevents flash) */
+body.loaded {
+  transition: background var(--ease-slow), color var(--ease-slow);
+}
+
+/* ═══════════════════════════════════════════
+   3. TYPOGRAPHY
+   ═══════════════════════════════════════════ */
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-primary);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+  margin-top: 0;
+}
+h1 { font-size: 2.5rem; margin-bottom: 0.5rem; letter-spacing: -0.03em; }
+h2 { font-size: 1.75rem; margin: 2.5em 0 0.75em; }
+h3 { font-size: 1.375rem; margin: 2em 0 0.5em; font-weight: 600; }
+h4 { font-size: 1.125rem; margin: 1.75em 0 0.5em; font-weight: 600; }
+h5 { font-size: 1rem; margin: 1.5em 0 0.5em; font-weight: 600; }
+h6 {
+  font-size: 0.8125rem; margin: 1.5em 0 0.5em;
+  text-transform: uppercase; letter-spacing: 0.06em;
+  font-weight: 600; color: var(--text-tertiary);
+}
+
+/* Prose body: Geist everywhere */
+.prose {
+  font-family: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 1.125rem;
+  line-height: 1.8;
+}
+
+/* ═══════════════════════════════════════════
+   4. LINKS
+   ═══════════════════════════════════════════ */
+
+a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(35, 55, 255, 0.3);
+  transition: color var(--ease), text-decoration-color var(--ease);
+}
+a:hover {
+  color: var(--accent-hover);
+  text-decoration-color: currentColor;
+}
+.prose a {
+  text-decoration-color: var(--border-medium);
+  font-family: 'Geist', sans-serif;
+  font-size: 0.95em;
+}
+.prose a:hover {
+  text-decoration-color: var(--accent);
+  background: var(--accent-glow);
+  border-radius: 2px;
+  padding: 0 2px; margin: 0 -2px;
+}
+
+/* ═══════════════════════════════════════════
+   5. PROSE ELEMENTS
+   ═══════════════════════════════════════════ */
+
+.prose p { margin-bottom: 1.6em; }
+.prose > * + h2 { margin-top: 3em; }
+.prose > * + h3 { margin-top: 2.5em; }
+
+.prose ul, .prose ol { margin-bottom: 1.6em; padding-left: 1.25em; }
+.prose li { margin-bottom: 0.4em; }
+.prose li::marker { color: var(--text-tertiary); }
+
+blockquote {
+  border-left: 3px solid var(--accent);
+  background: var(--bg-secondary);
+  padding: 1.25em 1.5em;
+  margin: 2em 0;
+  border-radius: 0 8px 8px 0;
+  font-style: italic;
+  color: var(--text-secondary);
+}
+blockquote p:last-child { margin-bottom: 0; }
+blockquote strong { color: var(--text-primary); }
+
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  /* Prevent CLS by hinting the browser about intrinsic size */
+  content-visibility: auto;
+}
+
+/* Prose images: break out of the 680px column for legibility.
+   Uses negative margin to expand to ~900px while text stays at 680px.
+   On mobile, stays full-width. */
+/* Prose images: break out of column, contain for paint perf */
+.prose img:not(.author-avatar) {
+  margin: 2.5em 0;
+  border-radius: 12px;
+  width: calc(100% + 120px);
+  max-width: min(900px, 100vw - 2rem);
+  margin-left: -60px;
+  display: block;
+  contain: layout style;
+}
+@media (max-width: 840px) {
+  .prose img:not(.author-avatar) {
+    width: 100%;
+    margin-left: 0;
+  }
+}
+
+table {
+  width: 100%; border-collapse: collapse;
+  margin: 2em 0; font-family: 'Geist', sans-serif; font-size: 0.9rem;
+}
+th, td { padding: 0.75em 1em; border-bottom: 1px solid var(--border-light); text-align: left; }
+th {
+  font-weight: 600; color: var(--text-secondary);
+  font-size: 0.75rem; text-transform: uppercase;
+  letter-spacing: 0.06em; background: var(--bg-secondary);
+}
+tr:hover td { background: var(--bg-secondary); }
+
+code {
+  font-family: 'Geist Mono', 'SF Mono', monospace;
+  font-size: 0.85em;
+  padding: 0.15em 0.4em;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-light);
+  border-radius: 4px;
+  color: var(--accent);
+}
+pre {
+  background: var(--bg-code); color: #e4e4e7;
+  padding: 1.5em; border-radius: 12px;
+  font-size: 0.875rem; line-height: 1.7;
+  overflow-x: auto; margin: 2em 0;
+  border: 1px solid var(--border-light);
+}
+pre > code {
+  all: unset;
+  font-family: 'Geist Mono', monospace;
+}
+
+hr { border: none; border-top: 1px solid var(--border-light); margin: 3em 0; }
+
+/* ═══════════════════════════════════════════
+   6. CATEGORY PILLS
+   ═══════════════════════════════════════════ */
+
+.category-pill {
+  display: inline-block;
+  padding: 0.15em 0.6em;
+  border-radius: 100px;
+  font-family: 'Geist', sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  line-height: 1.6;
+  white-space: nowrap;
+}
+.category-pill[data-category="Product Marketing"] { background: var(--cat-pm-bg); color: var(--cat-pm-text); }
+.category-pill[data-category="Indian Fintech"] { background: var(--cat-fintech-bg); color: var(--cat-fintech-text); }
+.category-pill[data-category="Career"] { background: var(--cat-career-bg); color: var(--cat-career-text); }
+.category-pill[data-category="Product Management"] { background: var(--cat-prodmgmt-bg); color: var(--cat-prodmgmt-text); }
+.category-pill[data-category="Growth Marketing"] { background: var(--cat-growth-bg); color: var(--cat-growth-text); }
+.category-pill[data-category="Creator Economy"] { background: var(--cat-creator-bg); color: var(--cat-creator-text); }
+.category-pill[data-category="Tech"] { background: var(--cat-tech-bg); color: var(--cat-tech-text); }
+.category-pill:not([data-category]) { background: var(--bg-secondary); color: var(--text-secondary); }
+
+/* ═══════════════════════════════════════════
+   7. RESPONSIVE
+   ═══════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  h1 { font-size: 1.875rem; }
+  h2 { font-size: 1.375rem; }
+  h3 { font-size: 1.125rem; }
+  .prose { font-size: 1.0625rem; line-height: 1.75; }
+}
+@media (min-width: 769px) {
+  :root { --page-padding: 2rem; }
+}
+
+/* ═══════════════════════════════════════════
+   8. ACCESSIBILITY & MISC
+   ═══════════════════════════════════════════ */
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+.sr-only {
+  position: absolute !important; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+::selection { background: var(--accent-light); color: var(--text-primary); }

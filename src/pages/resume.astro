@@ -1,0 +1,139 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { SITE_TITLE, SOCIALS } from '../consts';
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+	<BaseHead title={`Resume - ${SITE_TITLE}`} description="Download Mothi's resume — Product Marketing Manager" />
+</head>
+<body>
+	<Header />
+	<main class="page">
+		<div class="resume-hero">
+			<img src="/images/blog/cropped-mothi.png" alt="Mothi" class="resume-avatar" width="80" height="80" loading="eager" decoding="async" />
+			<div>
+				<h1>Mothilal</h1>
+				<p class="resume-role">Product Marketing Manager at Cashfree Payments</p>
+				<p class="resume-location">Bengaluru, India</p>
+			</div>
+		</div>
+
+		<div class="resume-actions">
+			<a href="/resume/mothi-resume.pdf" download class="btn-primary">
+				<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+					<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+				</svg>
+				Download Resume (PDF)
+			</a>
+			<a href={SOCIALS.linkedin} target="_blank" rel="noopener" class="btn-secondary">View LinkedIn</a>
+		</div>
+
+		<section class="resume-section">
+			<h2>Experience</h2>
+			<div class="timeline">
+				<div class="timeline-item">
+					<div class="timeline-meta">
+						<span class="timeline-date">2024 — Present</span>
+					</div>
+					<div class="timeline-content">
+						<h3>Product Marketing Manager</h3>
+						<p class="timeline-company">Cashfree Payments</p>
+						<p>Leading PMM for Secure ID (identity verification), developer community growth on Discord, and GTM strategy for B2B fintech products.</p>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="resume-section">
+			<h2>What I do</h2>
+			<div class="skills-grid">
+				<div class="skill-card">
+					<h3>Product Positioning</h3>
+					<p>Messaging, competitive intel, battlecards</p>
+				</div>
+				<div class="skill-card">
+					<h3>Go-to-Market</h3>
+					<p>Launch plans, sales enablement, pricing</p>
+				</div>
+				<div class="skill-card">
+					<h3>Content Strategy</h3>
+					<p>Blog, case studies, thought leadership</p>
+				</div>
+				<div class="skill-card">
+					<h3>Community</h3>
+					<p>Developer Discord, events, hackathons</p>
+				</div>
+			</div>
+		</section>
+	</main>
+	<Footer />
+</body>
+</html>
+
+<style>
+	.page {
+		max-width: var(--content-width); margin: 0 auto;
+		padding: 2.5rem var(--page-padding) 3rem;
+	}
+	.resume-hero {
+		display: flex; align-items: center; gap: 1.25rem;
+		margin-bottom: 2rem;
+	}
+	.resume-avatar { border-radius: 50%; object-fit: cover; }
+	.resume-hero h1 { font-size: 1.75rem; margin: 0 0 0.2rem; }
+	.resume-role { font-size: 0.95rem; color: var(--text-secondary); margin: 0; }
+	.resume-location { font-size: 0.85rem; color: var(--text-tertiary); margin: 0.15rem 0 0; }
+
+	.resume-actions {
+		display: flex; gap: 0.75rem; margin-bottom: 3rem;
+		padding-bottom: 2rem; border-bottom: 1px solid var(--border-light);
+	}
+	.btn-primary {
+		display: inline-flex; align-items: center; gap: 0.5rem;
+		padding: 0.65em 1.25em; font-size: 0.875rem; font-weight: 600;
+		background: var(--accent); color: white; border-radius: 8px;
+		text-decoration: none; transition: background var(--ease), transform var(--ease);
+	}
+	.btn-primary:hover { background: var(--accent-hover); color: white; }
+	.btn-secondary {
+		display: inline-flex; align-items: center;
+		padding: 0.65em 1.25em; font-size: 0.875rem; font-weight: 500;
+		color: var(--text-secondary); border: 1px solid var(--border-light);
+		border-radius: 8px; text-decoration: none; transition: all var(--ease);
+	}
+	.btn-secondary:hover {
+		border-color: var(--border-medium); color: var(--text-primary);
+		background: var(--bg-secondary);
+	}
+
+	.resume-section { margin-bottom: 2.5rem; }
+	.resume-section h2 {
+		font-size: 0.75rem; font-weight: 600; text-transform: uppercase;
+		letter-spacing: 0.08em; color: var(--text-tertiary);
+		margin: 0 0 1.25rem; padding-bottom: 0.5rem;
+		border-bottom: 1px solid var(--border-light);
+	}
+	.timeline-item { margin-bottom: 1.5rem; }
+	.timeline-date { font-size: 0.8rem; color: var(--text-tertiary); }
+	.timeline-content h3 { font-size: 1.05rem; margin: 0.25rem 0 0.15rem; }
+	.timeline-company { font-size: 0.875rem; color: var(--accent); margin: 0 0 0.5rem; font-weight: 500; }
+	.timeline-content p { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; margin: 0; }
+
+	.skills-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+	.skill-card {
+		padding: 1rem; border: 1px solid var(--border-light);
+		border-radius: 8px; background: var(--bg-card);
+	}
+	.skill-card h3 { font-size: 0.9rem; margin: 0 0 0.25rem; }
+	.skill-card p { font-size: 0.8rem; color: var(--text-secondary); margin: 0; }
+
+	@media (max-width: 640px) {
+		.resume-hero { flex-direction: column; text-align: center; }
+		.resume-actions { flex-direction: column; }
+		.skills-grid { grid-template-columns: 1fr; }
+	}
+</style>

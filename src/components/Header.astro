@@ -1,0 +1,102 @@
+---
+import { SITE_TITLE } from '../consts';
+import ThemeToggle from './ThemeToggle.astro';
+
+const pathname = Astro.url.pathname;
+const isActive = (href: string) => {
+  if (href === '/') return pathname === '/';
+  return pathname.startsWith(href);
+};
+---
+
+<header class="site-header">
+  <nav class="nav-inner" aria-label="Main navigation">
+    <a href="/" class="nav-brand">{SITE_TITLE}</a>
+    <div class="nav-links">
+      <a href="/blog" class:list={['nav-link', { active: isActive('/blog') }]}>Blog</a>
+      <a href="/projects" class:list={['nav-link', { active: isActive('/projects') }]}>Projects</a>
+      <a href="/movies" class:list={['nav-link', { active: isActive('/movies') }]}>Movies</a>
+      <a href="/about" class:list={['nav-link', { active: isActive('/about') }]}>About</a>
+      <ThemeToggle />
+    </div>
+    <div class="nav-mobile-right">
+      <ThemeToggle />
+      <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle menu" aria-expanded="false">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+          <line x1="3" y1="6" x2="17" y2="6"/><line x1="3" y1="10" x2="17" y2="10"/><line x1="3" y1="14" x2="17" y2="14"/>
+        </svg>
+      </button>
+    </div>
+  </nav>
+  <div class="mobile-menu" id="mobile-menu" hidden>
+    <a href="/blog" class:list={[{ active: isActive('/blog') }]}>Blog</a>
+    <a href="/projects" class:list={[{ active: isActive('/projects') }]}>Projects</a>
+    <a href="/movies" class:list={[{ active: isActive('/movies') }]}>Movies</a>
+    <a href="/about" class:list={[{ active: isActive('/about') }]}>About</a>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky; top: 0; z-index: 100;
+    border-bottom: 1px solid var(--border-light);
+    backdrop-filter: blur(12px);
+    background: rgba(250, 250, 249, 0.85);
+  }
+  :global([data-theme="dark"]) .site-header { background: rgba(15, 15, 18, 0.85); }
+
+  .nav-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    max-width: var(--wide-width); margin: 0 auto;
+    padding: 0 var(--page-padding); height: 56px;
+  }
+  .nav-brand {
+    font-size: 1.05rem; font-weight: 700;
+    color: var(--text-primary); text-decoration: none; letter-spacing: -0.02em;
+  }
+  .nav-links { display: flex; align-items: center; gap: 0.25rem; }
+  .nav-link {
+    padding: 0.4em 0.65em; font-size: 0.875rem; font-weight: 500;
+    color: var(--text-secondary); text-decoration: none; border-radius: 6px;
+    transition: color var(--ease), background var(--ease);
+  }
+  .nav-link:hover { color: var(--text-primary); background: var(--bg-secondary); }
+  .nav-link.active { color: var(--text-primary); font-weight: 600; background: var(--bg-secondary); }
+
+  .nav-mobile-right { display: none; align-items: center; gap: 0.5rem; }
+  .mobile-menu-btn {
+    display: flex; align-items: center; justify-content: center;
+    width: 36px; height: 36px; padding: 0; background: none;
+    border: 1px solid var(--border-light); border-radius: 8px;
+    color: var(--text-secondary); cursor: pointer;
+  }
+  .mobile-menu {
+    display: flex; flex-direction: column;
+    padding: 0.5rem var(--page-padding) 1rem;
+    border-bottom: 1px solid var(--border-light);
+  }
+  .mobile-menu[hidden] { display: none; }
+  .mobile-menu a {
+    padding: 0.65em 0; font-size: 0.95rem; font-weight: 500;
+    color: var(--text-secondary); text-decoration: none;
+    border-bottom: 1px solid var(--border-light);
+  }
+  .mobile-menu a:last-child { border-bottom: none; }
+  .mobile-menu a.active { color: var(--text-primary); font-weight: 600; }
+  .mobile-menu a:hover { color: var(--text-primary); }
+
+  @media (max-width: 640px) {
+    .nav-links { display: none; }
+    .nav-mobile-right { display: flex; }
+  }
+</style>
+
+<script>
+  const btn = document.getElementById('mobile-menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  btn?.addEventListener('click', () => {
+    const isOpen = !menu?.hidden;
+    menu!.hidden = isOpen;
+    btn.setAttribute('aria-expanded', String(!isOpen));
+  });
+</script>

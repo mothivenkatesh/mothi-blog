@@ -1,0 +1,101 @@
+---
+import { getCollection } from 'astro:content';
+import BaseHead from '../../components/BaseHead.astro';
+import Footer from '../../components/Footer.astro';
+import FormattedDate from '../../components/FormattedDate.astro';
+import Header from '../../components/Header.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
+
+const posts = (await getCollection('blog'))
+	.filter((p) => !p.data.draft)
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+function getReadTime(body: string | undefined) {
+	return Math.max(1, Math.ceil((body || '').split(/\s+/).filter(Boolean).length / 238));
+}
+
+const grouped: Record<string, typeof posts> = {};
+posts.forEach(p => { const yr = p.data.pubDate.getFullYear().toString(); (grouped[yr] ??= []).push(p); });
+const years = Object.keys(grouped).sort((a, b) => +b - +a);
+
+const catCounts: Record<string, number> = {};
+posts.forEach(p => p.data.categories.forEach((c: string) => { catCounts[c] = (catCounts[c] || 0) + 1; }));
+const categories = Object.entries(catCounts).sort((a, b) => b[1] - a[1]);
+---
+
+<!doctype html>
+<html lang="en">
+<head><BaseHead title={`Blog - ${SITE_TITLE}`} description={SITE_DESCRIPTION} /></head>
+<body>
+	<Header />
+	<main class="page">
+		<div class="page-header">
+			<h1>Blog</h1>
+			<p>{posts.length} posts on product marketing, fintech, and career growth</p>
+		</div>
+		<div class="filters">
+			<button class="filter-btn active" data-filter="all">All <span class="fc">{posts.length}</span></button>
+			{categories.map(([cat, count]) => (
+				<button class="filter-btn" data-filter={cat}>{cat} <span class="fc">{count}</span></button>
+			))}
+		</div>
+		{years.map(year => (
+			<section class="year-group" data-year={year}>
+				<h2 class="year-label">{year}</h2>
+				<ul class="post-list">
+					{grouped[year].map(post => (
+						<li class="post-item filterable" data-categories={JSON.stringify(post.data.categories)}>
+							<a href={`/blog/${post.id}/`} class="post-row">
+								<span class="post-title">{post.data.title}</span>
+								<div class="post-right">
+									{post.data.categories[0] && <span class="category-pill" data-category={post.data.categories[0]}>{post.data.categories[0]}</span>}
+									<span class="post-date"><FormattedDate date={post.data.pubDate} /></span>
+								</div>
+							</a>
+						</li>
+					))}
+				</ul>
+			</section>
+		))}
+	</main>
+	<Footer />
+	<script>
+		const btns = document.querySelectorAll('.filter-btn');
+		const items = document.querySelectorAll('.filterable');
+		const groups = document.querySelectorAll('.year-group');
+		btns.forEach(btn => btn.addEventListener('click', () => {
+			btns.forEach(b => b.classList.remove('active'));
+			btn.classList.add('active');
+			const f = btn.getAttribute('data-filter') || 'all';
+			items.forEach(item => {
+				if (f === 'all') item.classList.remove('hidden');
+				else { const cats = JSON.parse(item.getAttribute('data-categories') || '[]'); item.classList.toggle('hidden', !cats.includes(f)); }
+			});
+			groups.forEach(g => { (g as HTMLElement).style.display = g.querySelectorAll('.filterable:not(.hidden)').length ? '' : 'none'; });
+		}));
+	</script>
+</body>
+</html>
+
+<style>
+	.page { max-width: var(--wide-width); margin: 0 auto; padding: 2rem var(--page-padding) 3rem; }
+	.page-header { margin-bottom: 1.5rem; }
+	.page-header h1 { font-size: 2rem; margin: 0 0 0.25rem; }
+	.page-header p { color: var(--text-secondary); font-size: 1rem; margin: 0; }
+	.filters { display:flex; gap:0.35rem; flex-wrap:wrap; margin-bottom:2.5rem; padding-bottom:1.5rem; border-bottom:1px solid var(--border-light); }
+	.filter-btn { padding:0.3em 0.75em; font-size:0.8rem; font-weight:500; font-family:inherit; border:1px solid var(--border-light); border-radius:100px; background:var(--bg-card); color:var(--text-secondary); cursor:pointer; transition:all var(--ease); }
+	.filter-btn:hover { border-color:var(--text-tertiary); color:var(--text-primary); }
+	.filter-btn.active { background:var(--text-primary); color:var(--bg-card); border-color:var(--text-primary); }
+	.fc { font-size:0.65rem; opacity:0.6; margin-left:0.15em; }
+	.year-group { margin-bottom: 2rem; }
+	.year-label { font-size:0.8rem; font-weight:700; color:var(--text-tertiary); margin:0 0 0.75rem; }
+	.post-list { list-style:none; padding:0; margin:0; }
+	.post-item.hidden { display:none; }
+	.post-row { display:flex; justify-content:space-between; align-items:baseline; gap:1rem; padding:0.65rem 0.75rem; margin:0 -0.75rem; text-decoration:none; border-bottom:1px solid var(--border-light); border-radius:8px; transition:background var(--ease); }
+	.post-list li:last-child .post-row { border-bottom:none; }
+	.post-row:hover { background:var(--bg-secondary); }
+	.post-title { font-size:0.95rem; font-weight:600; color:var(--text-primary); line-height:1.35; }
+	.post-right { display:flex; align-items:center; gap:0.6rem; flex-shrink:0; }
+	.post-date { font-size:0.8rem; color:var(--text-tertiary); white-space:nowrap; }
+	@media (max-width:640px) { .post-row { flex-direction:column; gap:0.2rem; } }
+</style>

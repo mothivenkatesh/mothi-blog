@@ -1,0 +1,75 @@
+---
+import { SITE_TITLE, SOCIALS } from '../consts';
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <p class="footer-name">{SITE_TITLE}</p>
+        <p class="footer-bio">PMM. Writer. Builder.</p>
+      </div>
+      <div class="footer-nav">
+        <div class="footer-col">
+          <p class="footer-col-title">Content</p>
+          <a href="/blog">Blog</a>
+          <a href="/projects">Projects</a>
+          <a href="/movies">Movies</a>
+        </div>
+        <div class="footer-col">
+          <p class="footer-col-title">Connect</p>
+          <a href={SOCIALS.github} target="_blank" rel="noopener">GitHub</a>
+          <a href={SOCIALS.linkedin} target="_blank" rel="noopener">LinkedIn</a>
+          <a href={SOCIALS.twitter} target="_blank" rel="noopener">Twitter</a>
+        </div>
+        <div class="footer-col">
+          <p class="footer-col-title">Meta</p>
+          <a href="/about">About</a>
+          <a href="/rss.xml">RSS</a>
+          <a href="/resume">Resume</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; {year} Mothi</span>
+      <span class="footer-dot">&middot;</span>
+      <span>Built with Astro</span>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--border-light);
+    padding: 3rem var(--page-padding) 2rem;
+    margin-top: 4rem;
+  }
+  .footer-inner { max-width: var(--wide-width); margin: 0 auto; }
+  .footer-top {
+    display: flex; justify-content: space-between; gap: 2rem; margin-bottom: 2.5rem;
+  }
+  .footer-name { font-weight: 700; font-size: 1rem; color: var(--text-primary); margin: 0 0 0.25rem; }
+  .footer-bio { font-size: 0.85rem; color: var(--text-tertiary); margin: 0; }
+  .footer-nav { display: flex; gap: 3rem; }
+  .footer-col { display: flex; flex-direction: column; gap: 0.4rem; }
+  .footer-col-title {
+    font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--text-tertiary); margin: 0 0 0.25rem;
+  }
+  .footer-col a {
+    font-size: 0.85rem; color: var(--text-secondary);
+    text-decoration: none; transition: color var(--ease);
+  }
+  .footer-col a:hover { color: var(--text-primary); }
+  .footer-bottom {
+    display: flex; align-items: center; gap: 0.5rem;
+    padding-top: 1.5rem; border-top: 1px solid var(--border-light);
+    font-size: 0.75rem; color: var(--text-tertiary);
+  }
+  .footer-dot { opacity: 0.4; }
+  @media (max-width: 640px) {
+    .footer-top { flex-direction: column; }
+    .footer-nav { gap: 2rem; }
+  }
+</style>

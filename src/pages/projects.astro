@@ -1,0 +1,89 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { SITE_TITLE, PROJECTS } from '../consts';
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+	<BaseHead title={`Projects - ${SITE_TITLE}`} description="Open source projects and side builds by Mothi" />
+</head>
+<body>
+	<Header />
+	<main class="page">
+		<div class="page-header">
+			<h1>Projects</h1>
+			<p>Things I've built, mostly for fun, sometimes for work.</p>
+		</div>
+
+		<div class="project-grid">
+			{PROJECTS.map((p) => (
+				<a href={p.url} target="_blank" rel="noopener" class="project-card">
+					<div class="card-top">
+						<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="folder-icon">
+							<path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+						</svg>
+						<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="ext-icon">
+							<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+						</svg>
+					</div>
+					<h3>{p.name}</h3>
+					<p>{p.description}</p>
+					<div class="project-tags">
+						{p.tags.map((t) => <span class="tag">{t}</span>)}
+					</div>
+				</a>
+			))}
+		</div>
+	</main>
+	<Footer />
+</body>
+</html>
+
+<style>
+	.page {
+		max-width: var(--wide-width); margin: 0 auto;
+		padding: 2rem var(--page-padding) 3rem;
+	}
+	.page-header { margin-bottom: 2.5rem; }
+	.page-header h1 { font-size: 2rem; margin: 0 0 0.35rem; }
+	.page-header p { color: var(--text-secondary); font-size: 1rem; margin: 0; }
+
+	.project-grid {
+		display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.25rem;
+	}
+	.project-card {
+		display: flex; flex-direction: column;
+		padding: 1.5rem; border: 1px solid var(--border-light);
+		border-radius: 12px; text-decoration: none; background: var(--bg-card);
+		transition: background 150ms ease-out, border-color 150ms ease-out, box-shadow 150ms ease-out;
+		color: inherit;
+	}
+	.project-card:hover {
+		background: var(--accent-light);
+		border-color: var(--accent);
+		box-shadow: 0 0 0 1px var(--accent);
+	}
+	.project-card:hover h3 {
+		color: var(--accent);
+	}
+	.card-top {
+		display: flex; justify-content: space-between; align-items: center;
+		margin-bottom: 1rem;
+	}
+	.folder-icon { color: var(--accent); }
+	.ext-icon { color: var(--text-tertiary); }
+	.project-card h3 { font-size: 1.05rem; margin: 0 0 0.5rem; color: var(--text-primary); transition: color 150ms ease-out; }
+	.project-card p {
+		font-size: 0.875rem; color: var(--text-secondary);
+		line-height: 1.55; margin: 0 0 1rem; flex-grow: 1;
+	}
+	.project-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: auto; }
+	.tag {
+		font-size: 0.7rem; padding: 0.2em 0.55em; border-radius: 100px;
+		background: var(--bg-secondary); color: var(--text-tertiary);
+		font-weight: 500; font-family: 'JetBrains Mono', monospace;
+	}
+</style>
