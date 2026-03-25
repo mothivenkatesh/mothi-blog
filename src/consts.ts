@@ -5,19 +5,19 @@ export const PROJECTS = [
   {
     name: 'Fintech Circle',
     description: 'Social platform for fintech professionals — Go + React',
-    url: 'https://github.com/mothilal-dev/fintech-circle',
+    url: 'https://github.com/mothivenkatesh/fintech-circle',
     tags: ['Go', 'React', 'PostgreSQL'],
   },
   {
     name: 'Cashfree CLI',
     description: 'Developer CLI for Cashfree Payments API',
-    url: 'https://github.com/mothilal-dev/cashfree-cli',
+    url: 'https://github.com/mothivenkatesh/cashfree-cli',
     tags: ['Rust', 'CLI'],
   },
   {
     name: 'NotebookLM Py',
     description: 'Python wrapper for Google NotebookLM',
-    url: 'https://github.com/mothilal-dev/notebooklm-py',
+    url: 'https://github.com/mothivenkatesh/notebooklm-py',
     tags: ['Python', 'AI'],
   },
 ];
@@ -36,6 +36,6 @@ export const MOVIES = [
 export const SOCIALS = {
   github: 'https://github.com/mothivenkatesh',
   linkedin: 'https://linkedin.com/in/mothivenkatesh',
-  twitter: 'https://twitter.com/mothilal_dev',
+  twitter: 'https://x.com/mothivenkatesh',
   email: 'mailto:hello@mothi.work',
 };
