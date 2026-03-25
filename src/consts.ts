@@ -1,5 +1,5 @@
 export const SITE_TITLE = 'Mothi';
-export const SITE_DESCRIPTION = 'PMM at Cashfree Payments. Writing about product marketing, fintech, and career growth.';
+export const SITE_DESCRIPTION = 'Product Marketing leader at Cashfree Payments. Writing about product marketing, fintech, and career growth.';
 
 export const PROJECTS = [
   {
@@ -34,8 +34,8 @@ export const MOVIES = [
 ];
 
 export const SOCIALS = {
-  github: 'https://github.com/mothilal-dev',
-  linkedin: 'https://linkedin.com/in/mothilal',
+  github: 'https://github.com/mothivenkatesh',
+  linkedin: 'https://linkedin.com/in/mothivenkatesh',
   twitter: 'https://twitter.com/mothilal_dev',
   email: 'mailto:hello@mothi.work',
 };
