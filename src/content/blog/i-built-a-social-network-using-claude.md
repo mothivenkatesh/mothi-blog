@@ -63,6 +63,8 @@ These aren't exciting choices. They're boring choices that won't break at 3 AM w
 
 That weekend taught me two things: what libraries to use, and what problems not to solve. Both saved months.
 
+![Tech Stack Architecture](/mothi-blog/images/blog/fintech-circle-tech-stack.svg)
+
 ---
 
 ## The infrastructure philosophy: build for the stage you're at
@@ -349,6 +351,8 @@ Every time I wanted to add something, two filters applied. First, Claude's produ
 
 If either answer was no, it stayed on the v2 list.
 
+![V1 Scope Decision](/mothi-blog/images/blog/fintech-circle-v1-scope.svg)
+
 ---
 
 ## The LLM survival test (the question that changed everything)
@@ -373,6 +377,8 @@ The moat is verified identity + peer-attested reputation + closed-loop transacti
 
 And the beautiful thing: this moat runs on a $7/month Postgres database. The data that makes LLMs irrelevant doesn't require expensive infrastructure. It requires the right product decisions.
 
+![Data Moat Architecture](/mothi-blog/images/blog/fintech-circle-data-moat.svg)
+
 ---
 
 ## The WTFraud advantage (why this isn't a cold start)
@@ -388,6 +394,8 @@ I went through five WhatsApp group transcripts (WTFraud, IFF, IITians in Fintech
 The seeding play: 15-20 verified practitioners from WTFraud who've agreed to actively mark answers as "Helpful." Their job in Month 1 isn't asking questions. It's validating good answers. This single manual action creates the magic moment for every new practitioner who joins and answers something.
 
 Two years of running a WhatsApp group taught me who the credible people are, what motivates them, what they need to feel valued. No AI tool gives you that. Earned context. Cost nothing except time and attention.
+
+![The Flywheel](/mothi-blog/images/blog/fintech-circle-flywheel.svg)
 
 ---
 
