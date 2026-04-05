@@ -63,7 +63,7 @@ These aren't exciting choices. They're boring choices that won't break at 3 AM w
 
 That weekend taught me two things: what libraries to use, and what problems not to solve. Both saved months.
 
-![Tech Stack Architecture](/mothi-blog/images/blog/fintech-circle-tech-stack.svg)
+<img src="/mothi-blog/images/blog/fintech-circle-tech-stack.svg" alt="Tech Stack Architecture" width="100%" style="max-width:920px; border:1px solid #e5e7eb; border-radius:8px; padding:16px; background:#fff; margin:24px auto; display:block;" />
 
 ---
 
@@ -351,7 +351,7 @@ Every time I wanted to add something, two filters applied. First, Claude's produ
 
 If either answer was no, it stayed on the v2 list.
 
-![V1 Scope Decision](/mothi-blog/images/blog/fintech-circle-v1-scope.svg)
+<img src="/mothi-blog/images/blog/fintech-circle-v1-scope.svg" alt="V1 Scope Decision" width="100%" style="max-width:1100px; border:1px solid #e5e7eb; border-radius:8px; padding:16px; background:#fff; margin:24px auto; display:block;" />
 
 ---
 
@@ -377,7 +377,7 @@ The moat is verified identity + peer-attested reputation + closed-loop transacti
 
 And the beautiful thing: this moat runs on a $7/month Postgres database. The data that makes LLMs irrelevant doesn't require expensive infrastructure. It requires the right product decisions.
 
-![Data Moat Architecture](/mothi-blog/images/blog/fintech-circle-data-moat.svg)
+<img src="/mothi-blog/images/blog/fintech-circle-data-moat.svg" alt="Data Moat Architecture" width="100%" style="max-width:1000px; border:1px solid #e5e7eb; border-radius:8px; padding:16px; background:#fff; margin:24px auto; display:block;" />
 
 ---
 
@@ -395,7 +395,7 @@ The seeding play: 15-20 verified practitioners from WTFraud who've agreed to act
 
 Two years of running a WhatsApp group taught me who the credible people are, what motivates them, what they need to feel valued. No AI tool gives you that. Earned context. Cost nothing except time and attention.
 
-![The Flywheel](/mothi-blog/images/blog/fintech-circle-flywheel.svg)
+<img src="/mothi-blog/images/blog/fintech-circle-flywheel.svg" alt="The Flywheel" width="100%" style="max-width:1000px; border:1px solid #e5e7eb; border-radius:8px; padding:16px; background:#fff; margin:24px auto; display:block;" />
 
 ---
 
