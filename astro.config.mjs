@@ -4,7 +4,8 @@ import sitemap from '@astrojs/sitemap';
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({
-	site: 'https://mothi.work',
+	site: 'https://mothivenkatesh.github.io',
+	base: '/mothi-blog',
 	integrations: [mdx(), sitemap()],
 
 	// Prefetch links on hover — instant page transitions
