@@ -1,13 +1,13 @@
 ---
-title: "I Built a Social Network Using Claude. Here's What Actually Happened."
-description: "How a non-developer product marketer used Claude to architect Fintech Circle, a verified professional network for India's BFSI ecosystem. Covers the Bluesky codebase research, why Strapi over Supabase, why Postgres over wrappers, why Expo over bare React Native, and why vibe coding tools like Lovable fail for SEO-critical products."
+title: "How I Built a Professional Marketplace Using Claude Over a Weekend"
+description: "How a non-developer product marketer used Claude to architect Fintech Circle, a verified marketplace for India's BFSI ecosystem. Covers the Bluesky codebase research, why Strapi over Supabase, why Postgres over wrappers, why Expo over bare React Native, and why vibe coding tools like Lovable fail for SEO-critical products."
 pubDate: "2026-04-05T10:00:00"
 categories: ["Fintech"]
-tags: ["claude", "social-network", "strapi", "react-native", "expo", "postgres", "fintech", "bfsi", "ai"]
+tags: ["claude", "marketplace", "strapi", "react-native", "expo", "postgres", "fintech", "bfsi", "ai"]
 draft: false
 ---
 
-I didn't set out to build a social network. I set out to fix a WhatsApp group.
+I didn't set out to build a marketplace. I set out to fix a WhatsApp group.
 
 For over a year, I ran WTFraud, a community of 600+ fraud and risk practitioners across India's BFSI ecosystem. Lending heads, KYC product managers, compliance officers, fintech founders. The conversations were gold. The medium was garbage.
 
@@ -15,15 +15,15 @@ Someone asks a nuanced question about CKYC mismatch rates across vendors. Three 
 
 That gap became Fintech Circle. Claude is the reason it got built.
 
-I should say this upfront: I'm not a developer. I'm a product marketer who's spent a decade in fintech. I can't write a React component from scratch. I've never deployed a server. A year ago, the idea that I could ship a social network would have been absurd.
+I should say this upfront: I'm not a developer. I'm a product marketer who's spent a decade in fintech. I can't write a React component from scratch. I've never deployed a server. A year ago, the idea that I could ship a marketplace would have been absurd.
 
 This is what actually happened.
 
 ---
 
-## The real problem with professional communities in India
+## The real problem with finding trusted expertise in India
 
-Three platforms dominate professional networking in India. All three fail for the same reason.
+Three platforms dominate professional networking in India. All three fail as marketplaces for the same reason.
 
 **WhatsApp groups** have the practitioners but no structure. You don't own the channel. You can't segment. You can't search. A question asked on Monday is invisible by Wednesday.
 
@@ -31,11 +31,11 @@ Three platforms dominate professional networking in India. All three fail for th
 
 **Medial** has the product instinct but not the moat. Good UX, good streaks, good feed mechanics. But anyone can claim to be a founder. The trust layer is missing.
 
-**Peerlist** comes closest to what I want. Proof-of-work profiles. Builder credibility. Professional reputation earned through contributions, not job titles. But it's horizontal. It serves all builders equally, which means it serves no vertical deeply. A fintech compliance officer and a frontend developer are treated identically. The domain context that makes BFSI recommendations trustworthy doesn't exist.
+**Peerlist** comes closest to what I want. Proof-of-work profiles. Builder credibility. Professional reputation earned through contributions, not job titles. But it's horizontal. It serves all builders equally, which means it serves no vertical deeply. A fintech compliance officer and a frontend developer are treated identically. The domain context that makes BFSI expertise discoverable and transactable doesn't exist.
 
-I'll be direct about this: Fintech Circle draws heavy inspiration from both Peerlist and Medial. Peerlist's proof-of-work profiles, contribution graphs, and builder-first identity model are genuinely good product decisions. Medial's streaks, clean feed, and mobile-first approach proved that Indian builders will adopt a new social platform if it solves a real problem. I studied both products deeply before designing Fintech Circle.
+I'll be direct about this: Fintech Circle draws heavy inspiration from both Peerlist and Medial. Peerlist's proof-of-work profiles, contribution graphs, and builder-first identity model are genuinely good product decisions. Medial's streaks, clean feed, and mobile-first approach proved that Indian builders will adopt a new platform if it solves a real problem. I studied both products deeply before designing Fintech Circle.
 
-What I'm building isn't a competitor to either. It's the version that only works if you restrict it to one industry and add a verification layer that neither of them has. Peerlist for BFSI builders, with Medial's engagement mechanics, locked behind a verified identity that proves you actually work in this industry.
+What I'm building isn't a competitor to either. It's a verified marketplace for BFSI expertise where builders post queries and vetted partners respond. Restricted to one industry, locked behind a verified identity that proves you actually work in this space.
 
 The insight that changed everything: the problem isn't features. It's trust. If every single member is a verified practitioner with a real identity, real role, and real company, the quality problem solves itself. You don't need aggressive moderation when everyone's reputation is on the line.
 
@@ -43,11 +43,11 @@ The insight that changed everything: the problem isn't features. It's trust. If 
 
 ## The night I spent inside Bluesky's codebase
 
-Before writing a single line of product spec, I wanted to understand how a modern social network actually works under the hood. Not from blog posts. From source code.
+Before writing a single line of product spec, I wanted to understand how a modern platform actually works under the hood. Not from blog posts. From source code.
 
 Bluesky is open source. I cloned the repo on a Friday evening and spent the weekend reading through it with Claude. Not to understand every line of TypeScript, but to understand the shape of the thing. What's big? What's small? Where does the complexity actually live?
 
-The repo is 93.8% TypeScript, 1% Kotlin, 0.9% Swift. That ratio matters. A social network with millions of users runs on React Native with almost no native code. Bluesky uses Expo Modules API for exactly four native bridges: a custom UITextView for text selection, a translation module, a forked bottom sheet, a paste input for clipboard images. Everything else is TypeScript.
+The repo is 93.8% TypeScript, 1% Kotlin, 0.9% Swift. That ratio matters. A platform with millions of daily users runs on React Native with almost no native code. Bluesky uses Expo Modules API for exactly four native bridges: a custom UITextView for text selection, a translation module, a forked bottom sheet, a paste input for clipboard images. Everything else is TypeScript.
 
 The thing that killed the "just fork Bluesky" idea: roughly 93% of their codebase is AT Protocol integration. DID resolution. Personal Data Servers. Relay infrastructure. Lexicons. Feed Generators. Labelers. A complete decentralized identity layer that took ex-Twitter engineers years to build.
 
@@ -73,7 +73,7 @@ Every builder blog talks about what they chose. Nobody talks about why they chos
 
 One principle governs every infrastructure decision I made: **don't build for the company you want to be. Build for the company you are today.**
 
-Zero users. Zero revenue. Six weeks to get something live. Every rupee spent on infrastructure is a rupee not spent on the 239 seed questions, the 15 WTFraud moderators, or the verification API that makes this product different from every other social network.
+Zero users. Zero revenue. Six weeks to get something live. Every rupee spent on infrastructure is a rupee not spent on the 239 seed questions, the 15 WTFraud moderators, or the verification API that makes this product different from every other marketplace.
 
 The startup graveyard is full of products that scaled beautifully and launched never. I'd rather ship something ugly on a cheap stack this month than architect a perfect system I can't afford to finish.
 
@@ -157,13 +157,13 @@ Don't solve problems you don't have yet. Expo handles 100% of V1. The moment it 
 
 ## Why Strapi (and why the "headless CMS" label is misleading)
 
-Strapi is a headless CMS. Everyone knows it's for blogs and marketing pages. Not social networks. Not real-time feeds. Not anything that looks like Bluesky.
+Strapi is a headless CMS. Everyone knows it's for blogs and marketing pages. Not marketplaces. Not real-time feeds. Not anything that looks like Bluesky.
 
 I chose it anyway. The reason is operations, not engineering.
 
 ### The content problem nobody talks about
 
-A social network is, at its core, a content management system with a social layer on top. Posts are content. Profiles are content. Answers, badges, notifications: all structured content with types, fields, relationships, and permissions.
+A marketplace is, at its core, a content management system with a transactional layer on top. Posts are content. Profiles are content. Answers, badges, notifications: all structured content with types, fields, relationships, and permissions.
 
 Strapi lets me define posts, profiles, answers, and circles as structured content types with custom fields, relations, and validation. No SQL migrations. No ORM configuration. Define the shape of the data in the admin panel, Strapi generates the API. REST and GraphQL, both out of the box.
 
@@ -171,11 +171,11 @@ For a non-developer, this is the difference between "write database migrations" 
 
 ### The admin panel is the product (for operations)
 
-Nobody tells you this about running a community platform: 60% of the work is moderation, content review, user verification, and operational tasks. Not engineering.
+Nobody tells you this about running a marketplace: 60% of the work is moderation, listing review, user verification, and operational tasks. Not engineering.
 
 Strapi ships with an admin panel. Review flagged posts, ban users, approve verifications, edit Circle metadata, publish announcements. No code. Every CMS builder knows this. Social network builders somehow forget it and spend months building custom admin dashboards from scratch.
 
-I don't have an engineering team. I have me, a laptop, and Claude. The admin panel isn't a nice-to-have. It's what lets me operate a community platform alone.
+I don't have an engineering team. I have me, a laptop, and Claude. The admin panel isn't a nice-to-have. It's what lets me operate a marketplace alone.
 
 ### Handling the real-time gap
 
@@ -193,7 +193,7 @@ Strapi + Next.js gives me server-side rendered pages with full control over meta
 
 A Supabase backend gives me a database. I'd still need Next.js, and I'd be building the content API from scratch instead of using one that already exists and comes with an admin panel.
 
-Strapi was built for exactly this: structured content delivered to a frontend framework that handles rendering, SEO, and distribution. The fact that nobody uses it for social networks is a gap in imagination, not a gap in capability.
+Strapi was built for exactly this: structured content delivered to a frontend framework that handles rendering, SEO, and distribution. The fact that nobody uses it for marketplaces is a gap in imagination, not a gap in capability.
 
 ### What Strapi doesn't do (and why that's fine)
 
@@ -211,11 +211,11 @@ I tried Lovable. I tried Bolt. I tried v0. I'm a marketer who can't code. Of cou
 
 They're good at one thing: generating a pretty UI in 30 seconds. A landing page, a dashboard, a form. The demo looks impressive. You feel like you're building software.
 
-They can't do one other thing: build a product that Google can find.
+They can't do one other thing: build a marketplace that Google can find.
 
 ### The SEO problem
 
-Every question in c/Lending needs to be a page that ranks on Google. "What is the CKYC mismatch rate for Vendor A?" needs to be a URL that a compliance officer discovers when searching for exactly that problem. That's organic growth for a professional network. That's how you build without burning money on ads.
+Every question in c/Lending needs to be a page that ranks on Google. "What is the CKYC mismatch rate for Vendor A?" needs to be a URL that a compliance officer discovers when searching for exactly that problem. That's organic growth for a marketplace. That's how you build without burning money on ads.
 
 Lovable generates React SPAs. Client-side rendered. Google can crawl them, technically. But server-side rendered pages with proper meta tags, structured data, canonical URLs, and Open Graph tags will always outrank a client-rendered app. Not theoretical. Every serious content platform does this.
 
@@ -258,7 +258,7 @@ Every infrastructure decision above was made with one constraint: smallest possi
 | Domain | ~₹1,000 |
 | **Total to go live** | **Under ₹20,000** |
 
-Under twenty thousand rupees. A verified social network on Android, iOS, and web. Server-side rendering. Push notifications. Real-time feed. Admin panel for moderation. PAN-based identity verification.
+Under twenty thousand rupees. A verified marketplace on Android, iOS, and web. Server-side rendering. Push notifications. Real-time feed. Admin panel for moderation. PAN-based identity verification.
 
 No Supabase Pro at $25/month. No Firebase Blaze plan. No AWS bill that surprises you in Month 3. Every tool is free-tier or single-digit dollars. Every tool is replaceable without rewriting the application.
 
@@ -310,7 +310,7 @@ Four features. Not twelve. Not six. Four.
 
 **1. Circle Q&A (c/Lending only)**
 
-One Circle. Not eight. One. The first Circle is c/Lending because WTFraud has 600+ fraud and KYC practitioners who are adjacent to lending. They are the seed community for answers. They are the hard side.
+One Circle. Not eight. One. The first Circle is c/Lending because WTFraud has 600+ fraud and KYC practitioners who are adjacent to lending. They are the supply side — builders post queries, verified partners respond with real implementation data. They are the hard side.
 
 Andrew Chen's density rule: a thin network across 6 Circles is 6 dead products. A dense network in 1 Circle is 1 living product. c/KYC opens only after c/Lending crosses 200 active members AND 300 posts.
 
@@ -357,7 +357,7 @@ If either answer was no, it stayed on the v2 list.
 
 ## The LLM survival test (the question that changed everything)
 
-V1 of the vision was a six-pillar platform: Reddit-style Circles, ProductHunt-style Launchpad, Peerlist-style profiles, G2-style marketplace, jobs board, and deal intelligence. Ambitious. Comprehensive. Also, mostly commoditizable by any well-prompted LLM.
+V1 of the vision was a six-pillar marketplace: Q&A Circles for queries, Launchpad for partner showcases, verified profiles, service listings, jobs board, and deal intelligence. Ambitious. Comprehensive. Also, mostly commoditizable by any well-prompted LLM.
 
 I was deep in a Claude conversation about the product architecture when it asked me something that stopped me cold: "How does this survive when ChatGPT can answer any BFSI question for free?"
 
@@ -383,7 +383,7 @@ And the beautiful thing: this moat runs on a $7/month Postgres database. The dat
 
 ## The WTFraud advantage (why this isn't a cold start)
 
-Most social networks die in the first 60 days. The cold start problem: you need content to attract users, you need users to create content. Standard playbook: seed content, fake activity, hope for organic traction.
+Most marketplaces die in the first 60 days. The cold start problem: you need supply to attract demand, you need demand to attract supply. Standard playbook: seed content, fake activity, hope for organic traction.
 
 I don't have that problem.
 
@@ -443,11 +443,11 @@ Frugality applies to measurement too.
 
 ---
 
-## What I'd tell someone building a social network today
+## What I'd tell someone building a marketplace today
 
 **Start with the community you already have.** A year inside WTFraud before writing a single product spec. The community taught me what to build. The product is the container, not the content.
 
-**Vibe coding tools are prototyping tools.** Lovable generates a beautiful feed UI in 30 seconds. It cannot generate the SSR layer, structured data, auth flow, or SEO architecture that makes that feed discoverable. A demo is not a product.
+**Vibe coding tools are prototyping tools.** Lovable generates a beautiful feed UI in 30 seconds. It cannot generate the SSR layer, structured data, auth flow, or SEO architecture that makes listings discoverable. A demo is not a product.
 
 **$7/month infrastructure is a discipline, not a compromise.** Every dollar not spent on infra is a dollar spent on the community operations that determine whether your product survives.
 
@@ -475,21 +475,21 @@ Total cost: ₹20,000 and a lot of Claude conversations.
 
 ## Why this was built with Cashfree in mind
 
-I should be transparent about the strategic intent here. Fintech Circle wasn't built as a standalone side project. It was built as a product that belongs inside Cashfree's ecosystem.
+I should be transparent about the strategic intent here. Fintech Circle wasn't built as a standalone side project. It was built as a marketplace that belongs inside Cashfree's ecosystem.
 
-The logic is straightforward. Cashfree processes payments for thousands of businesses across India's fintech stack. Lending companies, NBFCs, neobanks, insurance platforms. These are the same practitioners who populate Fintech Circle. The overlap isn't accidental. It's the thesis.
+The logic is straightforward. Cashfree processes payments for thousands of businesses across India's fintech stack. Lending companies, NBFCs, neobanks, insurance platforms. These businesses need vetted developers, integration partners, compliance consultants, and domain experts. Fintech Circle is where they find them. The overlap isn't accidental. It's the thesis.
 
-**Distribution becomes a moat.** Cashfree already has relationships with the businesses whose employees are Fintech Circle's target users. Every merchant onboarded to Cashfree is a potential pipeline into the community. A payments company with an embedded professional network has a distribution advantage no standalone community app can replicate.
+**The partner acquisition engine.** Cashfree already onboards thousands of merchants. Every new merchant is a potential buyer on the marketplace — someone who needs a developer to integrate payments, a CA to set up compliance, a marketer to launch their product. Fintech Circle surfaces vetted partners to these merchants at the exact moment they need help. More partners sign up, more merchants get served, more referrals flow back to Cashfree. That's the flywheel.
 
-**Community data sharpens the core product.** When 600+ fraud and risk practitioners discuss CKYC mismatch rates, vendor reliability, and compliance edge cases in a structured, searchable format, that's market intelligence. Aggregated and anonymized, these signals inform product decisions: which verification APIs to prioritize, which compliance workflows to build next, where the friction lives in real-world BFSI operations. The community becomes a feedback loop that makes the payments infrastructure smarter.
+**Marketplace signals sharpen the core product.** When builders post queries about CKYC mismatch rates, vendor reliability, or compliance edge cases, and verified partners respond with real implementation data, that's structured market intelligence. Aggregated and anonymized, these signals inform product decisions: which verification APIs to prioritize, which compliance workflows to build next, where the friction lives in real-world BFSI operations. The marketplace becomes a feedback loop that makes the payments infrastructure smarter.
 
-**Trust is the brand play.** Fintech Circle verifies every member via PAN and employer validation. That verified practitioner network, hosted by a payments company trusted by thousands of businesses, positions Cashfree as more than infrastructure. It positions Cashfree as the platform where India's BFSI practitioners come to learn, build credibility, and make decisions. That's a brand moat that no API feature can replicate.
+**Trust through verification.** Every professional listed on Fintech Circle is PAN-verified using Cashfree's own BPAN API. That verified directory, powered by a payments company trusted by thousands of businesses, positions Cashfree as more than infrastructure. It positions Cashfree as the platform where India's BFSI ecosystem transacts — not just payments, but expertise. That's a brand moat that no API feature can replicate.
 
-**The Launchpad connection.** Fintech Circle's Launchpad lets verified practitioners showcase side projects, tools, and startups to the community. For Cashfree, this is a natural funnel: early-stage fintech builders discovering Cashfree's APIs through a community they already trust. Developer acquisition through community, not ad spend.
+**Launchpad as a partner showcase.** Fintech Circle's Launchpad lets verified partners showcase their tools, integrations, and services to the marketplace. For Cashfree, this is a natural funnel: developers and agencies discovering Cashfree's APIs through a marketplace they already use. Partner acquisition through utility, not ad spend.
 
-Every architectural decision, Strapi for content flexibility, Postgres for portability, Expo for cross-platform reach, headless CMS for API-first integration, was made with the assumption that this product would eventually run inside a larger platform's infrastructure. The stack is designed to merge, not to stand alone.
+Every architectural decision — Strapi for content flexibility, Postgres for portability, Expo for cross-platform reach, headless CMS for API-first integration — was made with the assumption that this product would eventually run inside a larger platform's infrastructure. The stack is designed to merge, not to stand alone.
 
-This is the bet: a payments company that also owns the professional network where its customers learn and connect has a compounding advantage that grows with every verified member. Fintech Circle is the product. Cashfree is where it belongs.
+This is the bet: a payments company that also owns the marketplace where its merchants find vetted partners has a compounding advantage that grows with every listing. Fintech Circle is the marketplace. Cashfree is where it belongs.
 
 ---
 
