@@ -5,8 +5,7 @@ import { defineConfig } from 'astro/config';
 import rehypeHighlight from 'rehype-highlight';
 
 export default defineConfig({
-	site: 'https://mothivenkatesh.github.io',
-	base: '/mothi-blog',
+	site: 'https://mothi.netlify.app',
 	integrations: [mdx(), sitemap()],
 
 	markdown: {
