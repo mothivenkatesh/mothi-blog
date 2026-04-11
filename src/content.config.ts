@@ -13,6 +13,8 @@ const blog = defineCollection({
 		categories: z.array(z.string()).default([]),
 		tags: z.array(z.string()).default([]),
 		draft: z.boolean().default(false),
+		// Opt-in Reveal.js slide mode — post is also rendered as a deck at /slides/[slug]
+		slides: z.boolean().default(false),
 	}),
 });
 

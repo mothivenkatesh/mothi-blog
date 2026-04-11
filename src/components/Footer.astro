@@ -1,30 +1,51 @@
 ---
 import { SITE_TITLE, SOCIALS } from '../consts';
 const year = new Date().getFullYear();
+
+// Sprite row — original emoji-style glyphs. Shuffles every ~3s on the client.
+const sprites = ['🪴', '🦜', '🐢', '🌵', '🦊', '🐙', '🍄', '🌻', '🦉', '🐞'];
+const tips = [
+  'still writing, still shipping',
+  'brb, drafting',
+  'press any key',
+  'product marketing, the long game',
+  'more tea, more ideas',
+  'hello from Bangalore',
+  'always be pitching',
+  'ask me about fintech',
+  'serif supremacy',
+  'built with Astro',
+];
 ---
 
 <footer class="site-footer">
   <div class="footer-inner">
+    <div class="sprite-row" aria-hidden="true">
+      {sprites.map((s, i) => (
+        <span class="sprite" data-tip={tips[i]}>{s}</span>
+      ))}
+    </div>
+
     <div class="footer-top">
       <div class="footer-brand">
         <p class="footer-name">{SITE_TITLE}</p>
-        <p class="footer-bio">Product Marketing leader. Writer. Builder.</p>
+        <p class="footer-bio">Product marketing, Indian fintech, and career notes.</p>
       </div>
       <div class="footer-nav">
         <div class="footer-col">
-          <p class="footer-col-title">Content</p>
-          <a href="/blog">Blog</a>
+          <p class="footer-col-title">Read</p>
+          <a href="/blog">Writing</a>
           <a href="/projects">Projects</a>
-          <a href="/movies">Movies</a>
+          <a href="/movies">Watching</a>
         </div>
         <div class="footer-col">
-          <p class="footer-col-title">Connect</p>
+          <p class="footer-col-title">Find me</p>
           <a href={SOCIALS.github} target="_blank" rel="noopener">GitHub</a>
           <a href={SOCIALS.linkedin} target="_blank" rel="noopener">LinkedIn</a>
           <a href={SOCIALS.twitter} target="_blank" rel="noopener">Twitter</a>
         </div>
         <div class="footer-col">
-          <p class="footer-col-title">Meta</p>
+          <p class="footer-col-title">More</p>
           <a href="/about">About</a>
           <a href="/rss.xml">RSS</a>
           <a href="/resume">Resume</a>
@@ -32,7 +53,9 @@ const year = new Date().getFullYear();
       </div>
     </div>
     <div class="footer-bottom">
-      <span>&copy; {year} Mothi</span>
+      <span>&copy; {year} {SITE_TITLE}</span>
+      <span class="footer-dot">&middot;</span>
+      <span>Set in PT Serif</span>
       <span class="footer-dot">&middot;</span>
       <span>Built with Astro</span>
     </div>
@@ -42,34 +65,100 @@ const year = new Date().getFullYear();
 <style>
   .site-footer {
     border-top: 1px solid var(--border-light);
-    padding: 3rem var(--page-padding) 2rem;
-    margin-top: 4rem;
+    padding: 4rem var(--page-padding) 2.5rem;
+    margin-top: 5rem;
+    background: var(--bg-secondary);
   }
   .footer-inner { max-width: var(--wide-width); margin: 0 auto; }
+
+  .sprite-row {
+    display: flex;
+    justify-content: flex-start;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+    font-size: 1.6rem;
+    flex-wrap: wrap;
+  }
+  .sprite {
+    position: relative;
+    display: inline-block;
+    cursor: default;
+    transition: transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1), filter 300ms;
+    filter: grayscale(0.15);
+  }
+  .sprite:hover {
+    transform: translateY(-4px) rotate(-6deg) scale(1.15);
+    filter: grayscale(0);
+  }
+  .sprite::after {
+    content: attr(data-tip);
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + 8px);
+    transform: translateX(-50%) translateY(4px);
+    background: var(--text-primary);
+    color: var(--bg-primary);
+    padding: 0.3em 0.6em;
+    border-radius: 4px;
+    font-family: 'PT Serif', Georgia, serif;
+    font-size: 0.7rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 180ms, transform 180ms;
+  }
+  .sprite:hover::after {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
   .footer-top {
     display: flex; justify-content: space-between; gap: 2rem; margin-bottom: 2.5rem;
   }
-  .footer-name { font-weight: 700; font-size: 1rem; color: var(--text-primary); margin: 0 0 0.25rem; }
-  .footer-bio { font-size: 0.85rem; color: var(--text-tertiary); margin: 0; }
+  .footer-name {
+    font-family: 'PT Serif', Georgia, serif;
+    font-weight: 700; font-size: 1.1rem;
+    color: var(--text-primary); margin: 0 0 0.25rem;
+  }
+  .footer-bio { font-size: 0.9rem; color: var(--text-tertiary); margin: 0; font-style: italic; }
   .footer-nav { display: flex; gap: 3rem; }
   .footer-col { display: flex; flex-direction: column; gap: 0.4rem; }
   .footer-col-title {
-    font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
-    letter-spacing: 0.08em; color: var(--text-tertiary); margin: 0 0 0.25rem;
+    font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--text-tertiary); margin: 0 0 0.3rem;
+    font-family: ui-sans-serif, system-ui, sans-serif;
   }
   .footer-col a {
-    font-size: 0.85rem; color: var(--text-secondary);
+    font-size: 0.92rem; color: var(--text-secondary);
     text-decoration: none; transition: color var(--ease);
   }
-  .footer-col a:hover { color: var(--text-primary); }
+  .footer-col a:hover { color: var(--accent); }
+
   .footer-bottom {
     display: flex; align-items: center; gap: 0.5rem;
     padding-top: 1.5rem; border-top: 1px solid var(--border-light);
-    font-size: 0.75rem; color: var(--text-tertiary);
+    font-size: 0.8rem; color: var(--text-tertiary);
+    flex-wrap: wrap;
   }
   .footer-dot { opacity: 0.4; }
+
   @media (max-width: 640px) {
     .footer-top { flex-direction: column; }
-    .footer-nav { gap: 2rem; }
+    .footer-nav { gap: 2rem; flex-wrap: wrap; }
+    .sprite-row { justify-content: center; gap: 0.8rem; }
   }
 </style>
+
+<script>
+  // Gentle sprite shuffle — swap positions every ~3s
+  const sprites = Array.from(document.querySelectorAll<HTMLElement>('.sprite'));
+  if (sprites.length > 1 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    setInterval(() => {
+      const i = Math.floor(Math.random() * sprites.length);
+      const el = sprites[i];
+      el.style.transition = 'transform 500ms cubic-bezier(0.34, 1.56, 0.64, 1)';
+      el.style.transform = 'translateY(-6px) rotate(8deg) scale(1.1)';
+      setTimeout(() => { el.style.transform = ''; }, 500);
+    }, 3000);
+  }
+</script>
