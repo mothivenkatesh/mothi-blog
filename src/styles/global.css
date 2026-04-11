@@ -1,13 +1,8 @@
 /*
- * Mothi Blog — Design System
- * Inspired by: Stamatiou (opacity hierarchy, hover reveals, 150ms transitions)
- *              Tania Rascia (warm tones, 3-col layout, code styling)
- *              Stefan Zweifel (year-grouped posts, minimal nav, projects page)
- *
- * Typography: Inter (headings) + Georgia (prose body)
- * Measure: 65ch (~680px) for optimal readability (Refactoring UI)
- * Spacing: 8-point grid
- * Colors: Opacity-based hierarchy, not hard color swaps
+ * Mothi Blog — Theme
+ * Aesthetic: content-first, generous whitespace, subtle animation, warm neutrals.
+ * Typography: PT Serif everywhere (body + headings), JetBrains-ish mono fallback for code.
+ * Measure: 680px reading column, 920px wide column for indexes.
  */
 
 /* ═══════════════════════════════════════════
@@ -15,130 +10,54 @@
    ═══════════════════════════════════════════ */
 
 :root {
-  --accent: #2337ff;
-  --accent-hover: #1a2be6;
-  --accent-light: #eef0ff;
-  --accent-glow: rgba(35, 55, 255, 0.08);
-
-  --text-primary: #1a1a2e;
-  --text-secondary: #555770;
-  --text-tertiary: #8b8fa8;
-  --text-inverted: #fafaf9;
-
-  --bg-primary: #fafaf9;
-  --bg-secondary: #f3f3f0;
-  --bg-tertiary: #eaeae6;
+  /* Warm neutral palette */
+  --bg-primary: #fbfaf7;     /* warm off-white */
+  --bg-secondary: #f3f1ea;
+  --bg-tertiary: #e9e6dc;
   --bg-card: #ffffff;
-  --bg-code: #1e1e2e;
+  --bg-code: #1b1b1f;
 
-  --border-light: #e5e5e0;
-  --border-medium: #d4d4cf;
+  --text-primary: #141414;
+  --text-secondary: #4a4a52;
+  --text-tertiary: #8a8a93;
+  --text-inverted: #fbfaf7;
 
-  --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
-  --shadow-md: 0 2px 8px rgba(0,0,0,0.06), 0 0 1px rgba(0,0,0,0.08);
-  --shadow-lg: 0 8px 24px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.04);
-  --shadow-hover: 0 12px 32px rgba(0,0,0,0.1), 0 4px 12px rgba(0,0,0,0.06);
+  --border-light: #e7e3d8;
+  --border-medium: #d4cfbf;
 
-  --ease: 150ms ease-out;
-  --ease-slow: 300ms ease-out;
+  /* Accents — playful but restrained */
+  --accent: #c2410c;          /* burnt orange */
+  --accent-hover: #9a330a;
+  --accent-light: #fdecd9;
+  --accent-glow: rgba(194, 65, 12, 0.1);
 
+  /* Category palette — reused from previous theme, retuned for warm base */
+  --cat-pm-bg: #fdecd9;      --cat-pm-text: #c2410c;
+  --cat-fintech-bg: #fef3c7; --cat-fintech-text: #92400e;
+  --cat-career-bg: #dcfce7;  --cat-career-text: #15803d;
+  --cat-prodmgmt-bg: #fce7f3;--cat-prodmgmt-text: #be185d;
+  --cat-growth-bg: #ecfccb;  --cat-growth-text: #4d7c0f;
+  --cat-creator-bg: #f3e8ff; --cat-creator-text: #7e22ce;
+  --cat-tech-bg: #dbeafe;    --cat-tech-text: #1d4ed8;
+
+  /* Shadows — soft, barely there */
+  --shadow-sm: 0 1px 2px rgba(20,20,20,0.04);
+  --shadow-md: 0 2px 10px rgba(20,20,20,0.06);
+  --shadow-lg: 0 12px 32px rgba(20,20,20,0.08);
+  --shadow-hover: 0 16px 40px rgba(20,20,20,0.12);
+
+  /* Motion */
+  --ease: 180ms cubic-bezier(0.2, 0.8, 0.3, 1);
+  --ease-slow: 350ms cubic-bezier(0.2, 0.8, 0.3, 1);
+
+  /* Layout */
   --content-width: 680px;
-  --wide-width: 800px;
+  --wide-width: 920px;
   --page-padding: 1.25rem;
-
-  --cat-pm-bg: #eef0ff; --cat-pm-text: #2337ff;
-  --cat-fintech-bg: #fef3e2; --cat-fintech-text: #b45309;
-  --cat-career-bg: #ecfdf5; --cat-career-text: #059669;
-  --cat-prodmgmt-bg: #fdf2f8; --cat-prodmgmt-text: #db2777;
-  --cat-growth-bg: #f0fdf4; --cat-growth-text: #16a34a;
-  --cat-creator-bg: #faf5ff; --cat-creator-text: #9333ea;
-  --cat-tech-bg: #eff6ff; --cat-tech-text: #2563eb;
-}
-
-/* ── Dark mode ── */
-[data-theme="dark"] {
-  --accent: #6b7cff;
-  --accent-hover: #8b97ff;
-  --accent-light: rgba(107, 124, 255, 0.12);
-  --accent-glow: rgba(107, 124, 255, 0.1);
-
-  --text-primary: #e4e4e7;
-  --text-secondary: #a1a1aa;
-  --text-tertiary: #71717a;
-  --text-inverted: #18181b;
-
-  --bg-primary: #0f0f12;
-  --bg-secondary: #18181d;
-  --bg-tertiary: #222228;
-  --bg-card: #1c1c22;
-  --bg-code: #0d0d12;
-
-  --border-light: #2a2a32;
-  --border-medium: #3a3a44;
-
-  --shadow-sm: 0 1px 2px rgba(0,0,0,0.2);
-  --shadow-md: 0 2px 8px rgba(0,0,0,0.3);
-  --shadow-lg: 0 8px 24px rgba(0,0,0,0.4);
-  --shadow-hover: 0 12px 32px rgba(0,0,0,0.5);
-
-  --cat-pm-bg: rgba(35,55,255,0.12); --cat-pm-text: #8b97ff;
-  --cat-fintech-bg: rgba(180,83,9,0.12); --cat-fintech-text: #fbbf24;
-  --cat-career-bg: rgba(5,150,105,0.12); --cat-career-text: #34d399;
-  --cat-prodmgmt-bg: rgba(219,39,119,0.12); --cat-prodmgmt-text: #f472b6;
-  --cat-growth-bg: rgba(22,163,106,0.12); --cat-growth-text: #4ade80;
-  --cat-creator-bg: rgba(147,51,234,0.12); --cat-creator-text: #c084fc;
-  --cat-tech-bg: rgba(37,99,235,0.12); --cat-tech-text: #60a5fa;
 }
 
 /* ═══════════════════════════════════════════
-   2. FONT FACE — Self-hosted Geist
-   ═══════════════════════════════════════════ */
-
-@font-face {
-  font-family: 'Geist';
-  src: url('/fonts/Geist-Regular.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Geist';
-  src: url('/fonts/Geist-Medium.woff2') format('woff2');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Geist';
-  src: url('/fonts/Geist-SemiBold.woff2') format('woff2');
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Geist';
-  src: url('/fonts/Geist-Bold.woff2') format('woff2');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Geist Mono';
-  src: url('/fonts/GeistMono-Regular.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Geist Mono';
-  src: url('/fonts/GeistMono-Medium.woff2') format('woff2');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-/* ═══════════════════════════════════════════
-   3. RESET & BASE
+   2. RESET & BASE
    ═══════════════════════════════════════════ */
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -148,23 +67,17 @@ html {
   -webkit-text-size-adjust: 100%;
 }
 
-/*
- * Font fallback with size-adjust to minimize CLS.
- * System fonts approximate Inter's metrics so layout barely shifts
- * when the web font loads.
- */
 body {
-  font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family: 'PT Serif', Georgia, 'Times New Roman', serif;
   margin: 0; padding: 0;
   background: var(--bg-primary);
   color: var(--text-primary);
-  font-size: 16px;
-  line-height: 1.6;
+  font-size: 17px;
+  line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* Only transition bg/color — don't transition on first load */
+  font-feature-settings: "kern", "liga", "clig", "calt";
 }
-/* Transition only after page is interactive (prevents flash) */
 body.loaded {
   transition: background var(--ease-slow), color var(--ease-slow);
 }
@@ -174,27 +87,28 @@ body.loaded {
    ═══════════════════════════════════════════ */
 
 h1, h2, h3, h4, h5, h6 {
+  font-family: 'PT Serif', Georgia, serif;
   color: var(--text-primary);
   line-height: 1.2;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
   font-weight: 700;
   margin-top: 0;
 }
-h1 { font-size: 2.5rem; margin-bottom: 0.5rem; letter-spacing: -0.03em; }
-h2 { font-size: 1.75rem; margin: 2.5em 0 0.75em; }
-h3 { font-size: 1.375rem; margin: 2em 0 0.5em; font-weight: 600; }
-h4 { font-size: 1.125rem; margin: 1.75em 0 0.5em; font-weight: 600; }
-h5 { font-size: 1rem; margin: 1.5em 0 0.5em; font-weight: 600; }
+h1 { font-size: 2.75rem; margin-bottom: 0.5rem; letter-spacing: -0.02em; }
+h2 { font-size: 1.875rem; margin: 2.5em 0 0.75em; }
+h3 { font-size: 1.4rem; margin: 2em 0 0.5em; }
+h4 { font-size: 1.15rem; margin: 1.75em 0 0.5em; }
+h5 { font-size: 1rem; margin: 1.5em 0 0.5em; }
 h6 {
-  font-size: 0.8125rem; margin: 1.5em 0 0.5em;
-  text-transform: uppercase; letter-spacing: 0.06em;
-  font-weight: 600; color: var(--text-tertiary);
+  font-size: 0.8rem; margin: 1.5em 0 0.5em;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  font-weight: 700; color: var(--text-tertiary);
+  font-family: 'PT Serif', Georgia, serif;
 }
 
-/* Prose body: Geist everywhere */
 .prose {
-  font-family: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 1.125rem;
+  font-family: 'PT Serif', Georgia, serif;
+  font-size: 1.1875rem;
   line-height: 1.8;
 }
 
@@ -203,24 +117,23 @@ h6 {
    ═══════════════════════════════════════════ */
 
 a {
-  color: var(--accent);
+  color: var(--text-primary);
   text-decoration: underline;
   text-decoration-thickness: 1px;
-  text-underline-offset: 3px;
-  text-decoration-color: rgba(35, 55, 255, 0.3);
+  text-underline-offset: 4px;
+  text-decoration-color: var(--border-medium);
   transition: color var(--ease), text-decoration-color var(--ease);
 }
 a:hover {
-  color: var(--accent-hover);
-  text-decoration-color: currentColor;
+  color: var(--accent);
+  text-decoration-color: var(--accent);
 }
 .prose a {
+  color: var(--text-primary);
   text-decoration-color: var(--border-medium);
-  font-family: 'Geist', sans-serif;
-  font-size: 0.95em;
 }
 .prose a:hover {
-  text-decoration-color: var(--accent);
+  color: var(--accent);
   background: var(--accent-glow);
   border-radius: 2px;
   padding: 0 2px; margin: 0 -2px;
@@ -230,41 +143,36 @@ a:hover {
    5. PROSE ELEMENTS
    ═══════════════════════════════════════════ */
 
-.prose p { margin-bottom: 1.6em; }
-.prose > * + h2 { margin-top: 3em; }
-.prose > * + h3 { margin-top: 2.5em; }
+.prose p { margin-bottom: 1.5em; }
+.prose > * + h2 { margin-top: 2.75em; }
+.prose > * + h3 { margin-top: 2.25em; }
 
-.prose ul, .prose ol { margin-bottom: 1.6em; padding-left: 1.25em; }
+.prose ul, .prose ol { margin-bottom: 1.5em; padding-left: 1.5em; }
 .prose li { margin-bottom: 0.4em; }
 .prose li::marker { color: var(--text-tertiary); }
 
 blockquote {
   border-left: 3px solid var(--accent);
   background: var(--bg-secondary);
-  padding: 1.25em 1.5em;
+  padding: 1em 1.5em;
   margin: 2em 0;
-  border-radius: 0 8px 8px 0;
+  border-radius: 0 6px 6px 0;
   font-style: italic;
   color: var(--text-secondary);
 }
 blockquote p:last-child { margin-bottom: 0; }
-blockquote strong { color: var(--text-primary); }
+blockquote strong { color: var(--text-primary); font-style: normal; }
 
 img {
   max-width: 100%;
   height: auto;
   border-radius: 8px;
-  /* Prevent CLS by hinting the browser about intrinsic size */
   content-visibility: auto;
 }
 
-/* Prose images: break out of the 680px column for legibility.
-   Uses negative margin to expand to ~900px while text stays at 680px.
-   On mobile, stays full-width. */
-/* Prose images: break out of column, contain for paint perf */
 .prose img:not(.author-avatar) {
   margin: 2.5em 0;
-  border-radius: 12px;
+  border-radius: 10px;
   width: calc(100% + 120px);
   max-width: min(900px, 100vw - 2rem);
   margin-left: -60px;
@@ -280,35 +188,48 @@ img {
 
 table {
   width: 100%; border-collapse: collapse;
-  margin: 2em 0; font-family: 'Geist', sans-serif; font-size: 0.9rem;
+  margin: 2em 0; font-size: 0.95rem;
 }
 th, td { padding: 0.75em 1em; border-bottom: 1px solid var(--border-light); text-align: left; }
 th {
-  font-weight: 600; color: var(--text-secondary);
-  font-size: 0.75rem; text-transform: uppercase;
+  font-weight: 700; color: var(--text-secondary);
+  font-size: 0.8rem; text-transform: uppercase;
   letter-spacing: 0.06em; background: var(--bg-secondary);
 }
 tr:hover td { background: var(--bg-secondary); }
 
+/* Inline code */
 code {
-  font-family: 'Geist Mono', 'SF Mono', monospace;
-  font-size: 0.85em;
-  padding: 0.15em 0.4em;
+  font-family: ui-monospace, 'SF Mono', 'JetBrains Mono', 'Cascadia Code', Menlo, monospace;
+  font-size: 0.88em;
+  padding: 0.12em 0.4em;
   background: var(--bg-secondary);
   border: 1px solid var(--border-light);
   border-radius: 4px;
   color: var(--accent);
 }
+
+/* Code blocks — base container; highlight.js theme tokens go on top */
 pre {
-  background: var(--bg-code); color: #e4e4e7;
-  padding: 1.5em; border-radius: 12px;
-  font-size: 0.875rem; line-height: 1.7;
-  overflow-x: auto; margin: 2em 0;
+  background: var(--bg-code);
+  color: #e4e4e7;
+  padding: 1.4em 1.5em;
+  border-radius: 10px;
+  font-size: 0.875rem;
+  line-height: 1.7;
+  overflow-x: auto;
+  margin: 2em 0;
   border: 1px solid var(--border-light);
 }
-pre > code {
+pre > code, pre code.hljs {
   all: unset;
-  font-family: 'Geist Mono', monospace;
+  display: block;
+  font-family: ui-monospace, 'SF Mono', 'JetBrains Mono', monospace;
+  background: transparent;
+  border: none;
+  padding: 0;
+  color: inherit;
+  font-size: 1em;
 }
 
 hr { border: none; border-top: 1px solid var(--border-light); margin: 3em 0; }
@@ -319,12 +240,12 @@ hr { border: none; border-top: 1px solid var(--border-light); margin: 3em 0; }
 
 .category-pill {
   display: inline-block;
-  padding: 0.15em 0.6em;
+  padding: 0.2em 0.7em;
   border-radius: 100px;
-  font-family: 'Geist', sans-serif;
-  font-size: 0.6875rem;
-  font-weight: 500;
-  letter-spacing: 0.02em;
+  font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
   line-height: 1.6;
   white-space: nowrap;
 }
@@ -342,9 +263,10 @@ hr { border: none; border-top: 1px solid var(--border-light); margin: 3em 0; }
    ═══════════════════════════════════════════ */
 
 @media (max-width: 768px) {
-  h1 { font-size: 1.875rem; }
-  h2 { font-size: 1.375rem; }
-  h3 { font-size: 1.125rem; }
+  body { font-size: 16px; }
+  h1 { font-size: 2rem; }
+  h2 { font-size: 1.5rem; }
+  h3 { font-size: 1.2rem; }
   .prose { font-size: 1.0625rem; line-height: 1.75; }
 }
 @media (min-width: 769px) {
@@ -373,3 +295,24 @@ hr { border: none; border-top: 1px solid var(--border-light); margin: 3em 0; }
   clip: rect(0,0,0,0); white-space: nowrap; border: 0;
 }
 ::selection { background: var(--accent-light); color: var(--text-primary); }
+
+/* ═══════════════════════════════════════════
+   9. STAGGERED BOUNCE-IN (for photo/card grids)
+   ═══════════════════════════════════════════ */
+
+@keyframes bounce-in {
+  0%   { opacity: 0; transform: scale(0.6) translateY(20px); }
+  60%  { opacity: 1; transform: scale(1.04) translateY(-2px); }
+  80%  { transform: scale(0.98) translateY(0); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+.bounce-in {
+  opacity: 0;
+  animation: bounce-in 520ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+.bounce-in:nth-child(1) { animation-delay: 40ms; }
+.bounce-in:nth-child(2) { animation-delay: 120ms; }
+.bounce-in:nth-child(3) { animation-delay: 200ms; }
+.bounce-in:nth-child(4) { animation-delay: 280ms; }
+.bounce-in:nth-child(5) { animation-delay: 360ms; }
+.bounce-in:nth-child(6) { animation-delay: 440ms; }

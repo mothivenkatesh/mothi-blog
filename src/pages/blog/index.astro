@@ -78,10 +78,10 @@ const categories = Object.entries(catCounts).sort((a, b) => b[1] - a[1]);
 </html>
 
 <style>
-	.page { max-width: var(--wide-width); margin: 0 auto; padding: 2rem var(--page-padding) 3rem; }
-	.page-header { margin-bottom: 1.5rem; }
-	.page-header h1 { font-size: 2rem; margin: 0 0 0.25rem; }
-	.page-header p { color: var(--text-secondary); font-size: 1rem; margin: 0; }
+	.page { max-width: var(--wide-width); margin: 0 auto; padding: 3.5rem var(--page-padding) 3rem; }
+	.page-header { margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border-light); }
+	.page-header h1 { font-family: 'PT Serif', Georgia, serif; font-size: 2.5rem; margin: 0 0 0.5rem; letter-spacing: -0.02em; }
+	.page-header p { color: var(--text-secondary); font-size: 1.05rem; margin: 0; font-style: italic; }
 	.filters { display:flex; gap:0.35rem; flex-wrap:wrap; margin-bottom:2.5rem; padding-bottom:1.5rem; border-bottom:1px solid var(--border-light); }
 	.filter-btn { padding:0.3em 0.75em; font-size:0.8rem; font-weight:500; font-family:inherit; border:1px solid var(--border-light); border-radius:100px; background:var(--bg-card); color:var(--text-secondary); cursor:pointer; transition:all var(--ease); }
 	.filter-btn:hover { border-color:var(--text-tertiary); color:var(--text-primary); }

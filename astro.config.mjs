@@ -2,11 +2,18 @@
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import { defineConfig } from 'astro/config';
+import rehypeHighlight from 'rehype-highlight';
 
 export default defineConfig({
 	site: 'https://mothivenkatesh.github.io',
 	base: '/mothi-blog',
 	integrations: [mdx(), sitemap()],
+
+	markdown: {
+		// Disable Astro's default Shiki — we use highlight.js instead
+		syntaxHighlight: false,
+		rehypePlugins: [rehypeHighlight],
+	},
 
 	// Prefetch links on hover — instant page transitions
 	prefetch: {
